@@ -34,6 +34,7 @@ class SignupView(drf_generics.GenericAPIView):
             email=email,
         )
         user.set_password(password)
+        user.save()
         
         login(request=request, user=user)
         
@@ -43,5 +44,30 @@ class SignupView(drf_generics.GenericAPIView):
         return Response({"key": token.key,}, status=status.HTTP_201_CREATED)
         
         
-
-
+class LoginView(drf_generics.GenericAPIView):
+    serializer_class = LoginSerializer
+    permission_classes = [drf_perms.AllowAny]
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        username = serializer.validated_data.get("username")
+        password = serializer.validated_data.get("password")
+        print(username, password)
+        
+        user = get_user_model().objects.filter(username=username).first()
+        
+        
+        if not user:
+            return Response({"error": "Please first register."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if user.check_password(password):
+            login(request=request, user=user)        
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"key": token.key,}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        

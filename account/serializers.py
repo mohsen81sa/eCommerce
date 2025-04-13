@@ -14,7 +14,9 @@ class SignupSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("password and password_confirmation mismatch.")
 
 
-class LoginSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model()
-        fields = ("username", "password")
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+    # class Meta:
+    #     model = get_user_model()
+    #     fields = ("username", "password")

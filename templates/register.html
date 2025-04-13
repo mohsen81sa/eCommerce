@@ -30,7 +30,7 @@
             <div id="register-message" class="mt-2"></div>
             <hr>
             <h2 class="text-center">Login</h2>
-            <form method="post" action="">
+            <form id="login-form">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="login-username" class="form-label">Username</label>
@@ -42,6 +42,7 @@
                 </div>
                 <button type="submit" class="btn btn-success w-100">Login</button>
             </form>
+            <div id="login-message" class="mt-2"></div>
         </div>
     </div>
 </div>
@@ -60,7 +61,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": csrfToken
+                // "X-CSRFToken": csrfToken
             },
             body: JSON.stringify(formData)
         });
@@ -68,9 +69,37 @@
         const messageDiv = document.getElementById("register-message");
         if (response.ok) {
             messageDiv.innerHTML = `<div class='alert alert-success'>${data.message}</div>`;
+            authToken = data.key;
+            localStorage.setItem("authToken", authToken);
             // TODO: Saving the returned key in storage.
         } else {
             messageDiv.innerHTML = `<div class='alert alert-danger'>${data.error || 'Registration failed'}</div>`;
+        }
+    });
+    document.getElementById("login-form").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        const formData = {
+            username: document.getElementById("login-username").value,
+            password: document.getElementById("login-password").value,
+        };
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const response = await fetch("http://127.0.0.1:8000/account/login-view/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken
+            },
+            body: JSON.stringify(formData)
+        });
+        const data = await response.json();
+        const messageDiv = document.getElementById("login-message");
+        if (response.ok) {
+            messageDiv.innerHTML = `<div class='alert alert-success'>${data.message}</div>`;
+            authToken = data.key;
+            localStorage.setItem("authToken", authToken);
+            // TODO: Saving the returned key in storage.
+        } else {
+            messageDiv.innerHTML = `<div class='alert alert-danger'>${data.error || 'Login failed'}</div>`;
         }
     });
 </script>
