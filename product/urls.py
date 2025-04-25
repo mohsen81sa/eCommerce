@@ -1,8 +1,9 @@
-from django.urls import path,include
-from .views import HomePageView
+from django.urls import path,re_path
+from . import views
 
+app_name = "product"
 
 urlpatterns = [
-    path('', HomePageView.as_view(), name='home'),
-    path("api/v1/", include('product.api.v1.urls')),
+    path("product/grid/",views.ShopProductGridView.as_view(),name="product-grid"),
+    re_path(r"product/(?P<slug>[-\w]+)/detail/",views.ShopProductDetailView.as_view(),name="product-detail"),
 ]
