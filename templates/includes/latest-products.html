@@ -39,7 +39,7 @@
 
                     <h4 class="card-title">
                         <a class="text-dark"
-                            href="{% url 'shop:product-detail' slug=latest_product.slug %}">{{latest_product.title}}</a>
+                            href="{% url 'product:product-detail' slug=latest_product.slug %}">{{latest_product.title}}</a>
                     </h4>
                     {% if latest_product.is_discounted %}
                     <p class="card-text text-dark fs-4">
@@ -88,7 +88,7 @@
     <!-- End Row -->
 
     <div class="text-center">
-        <a class="btn btn-outline-primary btn-transition rounded-pill" href="{% url 'shop:product-grid' %}">مشاهده تمامی
+        <a class="btn btn-outline-primary btn-transition rounded-pill" href="{% url 'product:product-grid' %}">مشاهده تمامی
             محصولات</a>
     </div>
 </div>

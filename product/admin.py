@@ -7,6 +7,7 @@ from .models import ProductModel, ProductImageModel, ProductCategoryModel,Wishli
 @admin.register(ProductModel)
 class ProductModelAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "stock", "status","price","discount_percent", "created_date")
+    list_editable = ("stock", "status", "price", "discount_percent")
 
 @admin.register(ProductCategoryModel)
 class ProductCategoryModelAdmin(admin.ModelAdmin):

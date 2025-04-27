@@ -1,7 +1,7 @@
 
 {% extends 'base.html' %}
 {% load static %}
-
+{% load shop_tags %}
 
 {% block content %}
 
@@ -275,6 +275,7 @@
 </div>
 <!-- End Content -->
 
+{% show_similar_products object %}
 
 <!-- Review Section -->
 <div id="reviewSection" class="container content-space-b-2 content-space-b-lg-3">

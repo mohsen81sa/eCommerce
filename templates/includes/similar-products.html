@@ -37,7 +37,7 @@
 
                     <h4 class="card-title">
                         <a class="text-dark"
-                            href="{% url 'shop:product-detail' slug=similar_prodcut.slug %}">{{similar_prodcut.title}}</a>
+                            href="{% url 'product:product-detail' slug=similar_prodcut.slug %}">{{similar_prodcut.title}}</a>
                     </h4>
                     {% if similar_prodcut.is_discounted %}
                     <p class="card-text text-dark fs-4">
