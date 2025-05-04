@@ -100,3 +100,8 @@ class LoginView(drf_generics.GenericAPIView):
         
         
         
+class GetUserProfileView(drf_generics.GenericAPIView):
+    permission_classes = [drf_perms.IsAuthenticated]
+    
+    def get(self, *args, **kwargs):
+        return Response(data={"username": self.request.user.username})
