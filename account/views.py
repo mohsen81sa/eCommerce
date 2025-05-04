@@ -16,7 +16,7 @@ from .models import *
 from .serializers import *
 
 class RegistrationView(TemplateView):
-    template_name = "register.html"
+    template_name = "signup.html"
     
     def get_context_data(self, **kwargs):
         return {}
